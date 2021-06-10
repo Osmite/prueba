@@ -20,6 +20,7 @@ class TablaEtapas extends Migration
             $table->string('descripcion')->nullable();
             $table->string('area')->nullable();
             $table->string('departamento')->nullable();
+            $table->integer('estatus')->nullable();
             $table->timestamp('created_at')->nullable();
             $table->timestamp('updated_at')->nullable();
 
@@ -33,6 +34,6 @@ class TablaEtapas extends Migration
      */
     public function down()
     {
-        //Schema::dropIfExists('etapas');
+        Schema::dropIfExists('etapas');
     }
 }

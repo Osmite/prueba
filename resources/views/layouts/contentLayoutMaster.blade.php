@@ -52,3 +52,18 @@ License: You must have a valid license purchased only from themeforest(the above
 @endif
 
 </html>
+
+<script>
+  function change_select(elem,valor) {
+	var instance = M.FormSelect.getInstance(elem);
+	instance.el.selectedIndex = valor; //Aqui el valor al que quieres cambiar
+	instance.destroy();
+	M.FormSelect.init(elem);
+}
+
+function updatefields(){
+$(document).ready(function() {
+    M.updateTextFields();
+  });
+}
+</script>

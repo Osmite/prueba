@@ -17,6 +17,7 @@ class TablaDepartamentos extends Migration
             $table->id('clave')->autoIncrement();
             $table->string('descripcion')->nullable();
             $table->string('area')->nullable();
+            $table->integer('estatus')->nullable();
             $table->timestamp('created_at')->nullable();
             $table->timestamp('updated_at')->nullable();
 
@@ -30,6 +31,6 @@ class TablaDepartamentos extends Migration
      */
     public function down()
     {
-        //Schema::dropIfExists('departamentos');
+        Schema::dropIfExists('departamentos');
     }
 }

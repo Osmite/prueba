@@ -47,6 +47,21 @@ class EtapasController extends Controller
      */
     public function store(Request $request)
     {
+        if ($request->action=="update"){
+            $request->validate([
+                'area' => 'required',
+                'departamento' => 'required',
+                'descripcion' => 'required',
+                
+            ]);
+            $etapas=Etapas::where('orden','=',$request->orden)->first();
+            //dd($etapas);
+            
+            $etapas->update($request->all());
+    
+            return redirect()->route('etapas.index')
+            ->with('success', 'Etapa actualizada exitosamente.');
+        }
         $request->validate([
             'area' => 'required',
             'departamento' => 'required',

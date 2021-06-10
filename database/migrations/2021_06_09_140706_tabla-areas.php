@@ -16,6 +16,7 @@ class TablaAreas extends Migration
         Schema::create('areas', function (Blueprint $table) {
             $table->id('clave')->autoIncrement();
             $table->string('descripcion')->nullable();
+            $table->integer('estatus')->nullable();
             $table->timestamp('created_at')->nullable();
             $table->timestamp('updated_at')->nullable();
      
@@ -29,6 +30,6 @@ class TablaAreas extends Migration
      */
     public function down()
     {
-        //Schema::dropIfExists('areas');
+        Schema::dropIfExists('areas');
     }
 }

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AreasController;
 use App\Http\Controllers\Auth\GoogleController;
 use App\Http\Controllers\ColoresController;
 use App\Http\Controllers\EtapasController;
@@ -43,3 +44,4 @@ Route::get('/colores', [ColoresController::class, 'index']);
 //Rutas para EtapasController
 //Route::get('/etapas', [EtapasController::class, 'index']);
 Route::resource('/etapas', EtapasController::class);
+Route::resource('/areas', AreasController::class);

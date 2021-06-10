@@ -9,6 +9,7 @@ class Etapas extends Model
 {
     use HasFactory;
     protected $table = 'etapas';
+    protected $primaryKey = "orden";
 
     protected $fillable = [
         'descripcion',

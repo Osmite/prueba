@@ -6,14 +6,14 @@ return [
         'pageHeader' => false, //options:Boolean: false(default), true (Page Header for Breadcrumbs) Warning:if pageheader true need to define a breadcrums in controller
         'bodyCustomClass' => '', //any custom class can be pass
         'navbarLarge' => true, //options:[boolean]:true or false default(true)
-        'navbarBgColor' => '', //Options: cyan,teal,light-blue,amber (any of materializecolor class can be pass). warning:if isNavbarDark set NavbarBgColor not work.
+        'navbarBgColor' => 'light', //Options: cyan,teal,light-blue,amber (any of materializecolor class can be pass). warning:if isNavbarDark set NavbarBgColor not work.
         'isNavbarDark' => null, //Options:True for dark, false for light and null for default (blank for default navbar background color according to theme)
         'isNavbarFixed' => true, // options:true or false
         'activeMenuColor' => '', //Sidebar active menu color (any of materializecolor class can be pass)
         'isMenuDark' => true, // True for dark, false for light and null for default(blank for default sidenav-color according to theme)
         'isMenuCollapsed' => true, // options:True or false  Warning:this option is not applicable for horizontal
         'activeMenuType' => '', //Options:default("") sidenav-active-square, sidenav-active-rounded, sidenav-active-fullwidth  Warning:this option is not applicable for horizontal
-        'isFooterDark' => null, //True for dark, flase for light and null for default
+        'isFooterDark' => true, //True for dark, flase for light and null for default
         'isFooterFixed' => false, //options:true or false
         'templateTitle' => '', //template Title can be changes default('Materialize)
         'defaultLanguage' => 'en', //set your default language Options: en(default),pt,fr,de

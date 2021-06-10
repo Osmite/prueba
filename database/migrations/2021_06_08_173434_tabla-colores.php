@@ -20,8 +20,10 @@ class TablaColores extends Migration
             $table->string('nombreEng')->nullable();
             $table->string('codigo')->nullable();
             $table->string('tipo')->nullable();
+            $table->integer('estatus')->nullable();
             $table->timestamp('created_at')->nullable();
             $table->timestamp('updated_at')->nullable();
+            
 
         });
     }
@@ -33,6 +35,6 @@ class TablaColores extends Migration
      */
     public function down()
     {
-      //Schema::dropIfExists('colores');
+      Schema::dropIfExists('colores');
     }
 }
