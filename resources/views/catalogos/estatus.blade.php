@@ -112,8 +112,19 @@
                <tr>
                 <td id="clave-{{$estat->clave}}">{{$estat->clave}}</td>
                 <td id="descripcion-{{$estat->clave}}">{{$estat->descripcion}}</td>
-                <td id="area-{{$estat->clave}}">{{$estat->area}}</td>
-                <td id="departamento-{{$estat->clave}}">{{$estat->departamento}}</td>
+                
+                @foreach ($areas as $area)
+                @if ($area->clave==$estat->area)
+                  <td>{{ $area->descripcion }}</td>
+                @endif
+                @endforeach
+
+                @foreach ($departamentos as $departamento)
+                @if ($departamento->clave==$estat->departamento)
+                <td>{{ $departamento->descripcion }}</td>
+                @endif
+                @endforeach
+               
                 <td>
                   <a onclick="actualizar({{$estat->clave}},'{{$estat->descripcion}}',{{$estat->estatus}},'{{$estat->area}}',{{$estat->departamento}})"><i class="material-icons">edit</i></a>
                   <a href="{{ route('estatus.edit',$estat->clave) }}"><i class="material-icons">delete</i></a>

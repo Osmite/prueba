@@ -112,8 +112,17 @@
                <tr>
                 <td id="orden-{{$etapa->orden}}">{{$etapa->orden}}</td>
                 <td id="descripcion-{{$etapa->orden}}">{{$etapa->descripcion}}</td>
-                <td id="area-{{$etapa->orden}}">{{$etapa->area}}</td>
-                <td id="departamento-{{$etapa->orden}}">{{$etapa->departamento}}</td>
+                @foreach ($areas as $area)
+                @if ($area->clave==$etapa->area)
+                  <td>{{ $area->descripcion }}</td>
+                @endif
+                @endforeach
+
+                @foreach ($departamentos as $departamento)
+                @if ($departamento->clave==$etapa->departamento)
+                <td>{{ $departamento->descripcion }}</td>
+                @endif
+                @endforeach
                 <td>
                   <a onclick="actualizar({{$etapa->orden}},'{{$etapa->descripcion}}',{{$etapa->estatus}},'{{$etapa->area}}',{{$etapa->departamento}})"><i class="material-icons">edit</i></a>
                   <a href="{{ route('etapas.edit',$etapa->orden) }}"><i class="material-icons">delete</i></a>
