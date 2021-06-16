@@ -2,7 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Areas;
+use App\Models\Departamentos;
+use App\Models\Estatus;
 use Illuminate\Http\Request;
+
 
 class EstatusControler extends Controller
 {
@@ -13,7 +17,16 @@ class EstatusControler extends Controller
      */
     public function index()
     {
-        //
+        $areas = Areas::get()->all();
+        $departamentos= Departamentos::get()->all();
+        $estatus = Estatus::where('estatus','!=',3)->get()->all();        
+        $breadcrumbs = [
+            ['link' => "/", 'name' => "estatus"], ['link' => "javascript:void(0)", 'name' => "estatus"], ['name' => "estatus"],
+        ];
+        //Pageheader set true for breadcrumbs
+        $pageConfigs = ['pageHeader' => true];
+      //dd($colores);
+        return view('catalogos.estatus', /*['pageConfigs' => $pageConfigs],*/ ['breadcrumbs' => $breadcrumbs])->with(compact('estatus','areas','departamentos'));
     }
 
     /**
@@ -34,9 +47,49 @@ class EstatusControler extends Controller
      */
     public function store(Request $request)
     {
-        //
-    }
+        //dd($request);
+        switch ($request->estado) {
+            case "on":
+                $estatus=1;
+                break;
+           
+            default:
+                $estatus=2;
+                break;
+        }
+        //dd($request->estatus);
+        
+        if ($request->action=="update"){
+            //dd($request);
+            $request->validate([
+                'area' => 'required',
+                'departamento' => 'required',
+                'descripcion' => 'required',
+                
+                
+            ]);
+            $modelEstatus=Estatus::where('clave','=',$request->clave)->first();
+            //dd($etapas);
+            
+            $modelEstatus->update($request->all());
+            $modelEstatus->update(['estatus' => $estatus]);
+    
+            return redirect()->route('estatus.index')
+            ->with('success', 'Estatus actualizado exitosamente.');
+        }
+        $request->validate([
+            'area' => 'required',
+            'departamento' => 'required',
+            'descripcion' => 'required',
+            
+        ]);
 
+        $modelEstatus=Estatus::create($request->all());
+        $modelEstatus->update(['estatus' => $estatus]);
+
+        return redirect()->route('estatus.index')
+            ->with('success', 'Estatus creada exitosamente.');
+    }
     /**
      * Display the specified resource.
      *
@@ -56,7 +109,14 @@ class EstatusControler extends Controller
      */
     public function edit($id)
     {
-        //
+        
+        $modelEstatus=Estatus::where('clave','=',$id)->first();
+        //dd($etapas);
+        //$ejemplo = Etapas::find($id)->update(['estatus' => 3]);
+        $modelEstatus->update(['estatus' => 3]);
+        return redirect()->route('estatus.index')
+        ->with('success', 'Estatus Borrado.');
+
     }
 
     /**

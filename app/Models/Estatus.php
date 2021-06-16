@@ -8,4 +8,14 @@ use Illuminate\Database\Eloquent\Model;
 class Estatus extends Model
 {
     use HasFactory;
+    protected $table = 'estatus';
+    protected $primaryKey = "clave";
+
+    protected $fillable = [
+        'descripcion',
+        'area',
+        'departamento',
+        'estatus',
+        
+    ];
 }
