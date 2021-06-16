@@ -17,18 +17,12 @@
             <div style="display: block;" id="form-nuevo" class="card card card-default scrollspy">
               <div class="card-content">
                 <h4 class="card-title">Nueva Etapa</h4>
-                <p>
-                  <label>
-                    <input type="checkbox" checked="checked" />
-                    <span>Activo</span>
-                  </label>
-                </p>
                 <form action="{{ route('etapas.store') }}" method="POST" >
                   @csrf
                   <div class="row">
-                    <div class="input-field col m6 s12">
+                    <div  id="divarea" class="input-field col m6 s12">
                       <select id="area" name="area"  >
-                        <option value="0" disabled selected >Selecciona Area</option>
+                        <option value="0" >Selecciona Area</option>
                         @foreach ($areas as $area)
                         <option value="{{$area->clave}}">{{$area->descripcion}}</option>
                         @endforeach
@@ -37,7 +31,7 @@
                     </div>
                     <div class="input-field col m6 s12">
                       <select name="departamento" id="departamento" >
-                        <option value="0" disabled selected>Selecciona Departamento</option>
+                        <option value="" disabled selected>Selecciona Departamento</option>
                         @foreach ($departamentos as $departamento)
                         <option value="{{$departamento->clave}}">{{$departamento->descripcion}}</option>
                         @endforeach
@@ -57,8 +51,8 @@
                     
                     <div class="input-field col m4 s12">
                       <div class="input-field col s12">
-                        <button style="display:none" class="btn cyan waves-effect waves-light" id=guardar value="save" type="submit" name="action">Guardar</button>
-                        <button style="display: none" class="btn cyan waves-effect waves-light" id=actualizar value="update" type="submit" name="action">Actualizar</button>                       
+                        <button class="btn cyan waves-effect waves-light" id=guardar type="submit" name="action">Guardar</button>
+                       
                         
                       </div>
                     </div>
@@ -131,19 +125,11 @@
   function myFunction() {
     
     var x = document.getElementById("form-nuevo");
-    var btn_actualizar = document.getElementById("actualizar");
-    var btn_guardar = document.getElementById("guardar");
     
     if (x.style.display === "none") {
         x.style.display = "block";
-        btn_guardar.style.display = "block";
-        btn_actualizar.style.display = "none";
-        
-
     } else {
         x.style.display = "none";
-        btn_guardar.style.display = "none";
-        btn_actualizar.style.display = "none";
     }
 
 }
@@ -154,19 +140,30 @@ function actualizar(orden, descripcion,area,departamento) {
   
   $('#orden').val(orden);
   $('#descripcion').val(descripcion);
-  selectArea = document.getElementById('area'); 
-  selectDepto = document.getElementById('departamento'); 
-  change_select(selectArea,area);
-  change_select(selectDepto,departamento);
-  updatefields();
-  var btn_actualizar = document.getElementById("actualizar");
-  var btn_guardar = document.getElementById("guardar");
-  btn_actualizar.style.display = "block";
-  btn_guardar.style.display = "none";
-  var x = document.getElementById("form-nuevo");
-  if (x.style.display === "none") {
-    x.style.display = "block";
-  }
+  //$('#area').val(area);
+  //$('#departamento').val(departamento);
+  $('#area').val(area).change();
+  $('#departamento').val(departamento).change();
+  
+ 
+ 
+
+ 
+
+ 
+
+
+  //alert (document.getElementById("area").value);
+
+
+
+    var x = document.getElementById("form-nuevo");
+   /* if (x.style.display === "none") {
+        x.style.display = "block";
+    } else {
+        x.style.display = "none";
+    }*/
+    
 }
 </script>
 

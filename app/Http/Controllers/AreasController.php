@@ -15,7 +15,7 @@ class AreasController extends Controller
     public function index()
     {
         
-        $areas = Areas::get()->all();
+        $areas = Areas::where('estatus','!=',3)->get()->all();
         
         $breadcrumbs = [
             ['link' => "/", 'name' => "Areas"], ['link' => "javascript:void(0)", 'name' => "Areas"], ['name' => "Areas"],
@@ -23,7 +23,7 @@ class AreasController extends Controller
         //Pageheader set true for breadcrumbs
         $pageConfigs = ['pageHeader' => true];
       //dd($colores);
-        return view('areas.areas', /*['pageConfigs' => $pageConfigs],*/ ['breadcrumbs' => $breadcrumbs])->with(compact('areas'));
+        return view('catalogos.areas', /*['pageConfigs' => $pageConfigs],*/ ['breadcrumbs' => $breadcrumbs])->with(compact('areas'));
     }
 
     /**
@@ -42,20 +42,48 @@ class AreasController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
+ 
     public function store(Request $request)
     {
-        $request->validate([
+        //dd($request);
+        switch ($request->estado) {
+            case "on":
+                $estatus=1;
+                break;
+           
+            default:
+                $estatus=2;
+                break;
+        }
+        //dd($request->estatus);
+        
+        if ($request->action=="update"){
             
+            $request->validate([
+                'descripcion' => 'required',
+            ]);
+            $etapas=Areas::where('clave','=',$request->clave)->first();
+            //dd($etapas);
+            
+            $etapas->update($request->all());
+            $etapas->update(['estatus' => $estatus]);
+    
+            return redirect()->route('areas.index')
+            ->with('success', 'Area actualizada exitosamente.');
+        }
+        $request->validate([
+        
             'descripcion' => 'required',
-            //'estatus' => 'required',
             
         ]);
 
-        Areas::create($request->all());
+        $etapa=Areas::create($request->all());
+        $etapa->update(['estatus' => $estatus]);
 
         return redirect()->route('areas.index')
             ->with('success', 'Area creada exitosamente.');
     }
+
 
     /**
      * Display the specified resource.
@@ -76,7 +104,14 @@ class AreasController extends Controller
      */
     public function edit($id)
     {
-        //
+        //dd($id);
+        $areas=Areas::where('clave','=',$id)->first();
+        ///dd($etapas);
+        //$ejemplo = Etapas::find($id)->update(['estatus' => 3]);
+        $areas->update(['estatus' => 3]);
+        return redirect()->route('areas.index')
+        ->with('success', 'area borrada exitosamente.');
+
     }
 
     /**

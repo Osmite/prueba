@@ -12,14 +12,15 @@ class TablaDepartamentos extends Migration
      * @return void
      */
     public function up()
-    {
+    {Schema::dropIfExists('departamentos');
         Schema::create('departamentos', function (Blueprint $table) {
             $table->id('clave')->autoIncrement();
             $table->string('descripcion')->nullable();
-            $table->string('area')->nullable();
+            $table->unsignedBigInteger('area')->nullable();           
             $table->integer('estatus')->nullable();
             $table->timestamp('created_at')->nullable();
             $table->timestamp('updated_at')->nullable();
+            $table->foreign('area')->references('clave')->on('areas')->onDelete('set null');
 
         });
     }

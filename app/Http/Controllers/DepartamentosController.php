@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Areas;
+use App\Models\Departamentos;
 use Illuminate\Http\Request;
+
 
 class DepartamentosController extends Controller
 {
@@ -11,9 +14,25 @@ class DepartamentosController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+  
     public function index()
     {
-        //
+         $areas = Areas::where('estatus','!=',3)->get()->all();
+         $areasAll = Areas::get()->all();
+
+         $departamentos = Departamentos::where('estatus','!=',3)->get()->all();
+        
+         //$departamentos = Departamentos::get()->all();
+      //  $areas=Areas::with('area')->all();
+        //dd($areas);
+        $breadcrumbs = [
+            ['link' => "/", 'name' => "Departamentos"], ['link' => "javascript:void(0)", 'name' => "Departamentos"], ['name' => "Departamentos"],
+        ];
+        //Pageheader set true for breadcrumbs
+        $pageConfigs = ['pageHeader' => true];
+      //dd($colores);
+      //dd($catA);
+        return view('catalogos.departamentos', /*['pageConfigs' => $pageConfigs],*/ ['breadcrumbs' => $breadcrumbs])->with(compact('departamentos','areas','areasAll'));
     }
 
     /**
@@ -34,8 +53,48 @@ class DepartamentosController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        //dd($request);
+        switch ($request->estado) {
+            case "on":
+                $estatus=1;
+                break;
+           
+            default:
+                $estatus=2;
+                break;
+        }
+        //dd($request->estatus);
+        
+        if ($request->action=="update"){
+            
+            $request->validate([
+                'descripcion' => 'required',
+                'area' => 'required',
+            ]);
+            $etapas=Departamentos::where('clave','=',$request->clave)->first();
+            //dd($etapas);
+            
+            $etapas->update($request->all());
+            $etapas->update(['estatus' => $estatus]);
+    
+            return redirect()->route('departamentos.index')
+            ->with('success', 'Departamento actualizada exitosamente.');
+        }
+        $request->validate([
+        
+            'descripcion' => 'required',
+            'area' => 'required',
+            
+        ]);
+
+        $etapa=Departamentos::create($request->all());
+        $etapa->update(['estatus' => $estatus]);
+
+        return redirect()->route('departamentos.index')
+            ->with('success', 'Departamento creada exitosamente.');
     }
+
+
 
     /**
      * Display the specified resource.
@@ -56,7 +115,14 @@ class DepartamentosController extends Controller
      */
     public function edit($id)
     {
-        //
+        //dd($id);
+        $departamentos=Departamentos::where('clave','=',$id)->first();
+        ///dd($etapas);
+        //$ejemplo = Etapas::find($id)->update(['estatus' => 3]);
+        $departamentos->update(['estatus' => 3]);
+        return redirect()->route('departamentos.index')
+        ->with('success', 'departamento borrada exitosamente.');
+
     }
 
     /**

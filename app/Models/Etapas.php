@@ -15,6 +15,7 @@ class Etapas extends Model
         'descripcion',
         'area',
         'departamento',
+        'estatus',
         
     ];
 }

@@ -3,6 +3,7 @@
 use App\Http\Controllers\AreasController;
 use App\Http\Controllers\Auth\GoogleController;
 use App\Http\Controllers\ColoresController;
+use App\Http\Controllers\DepartamentosController;
 use App\Http\Controllers\EtapasController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PageController;
@@ -41,7 +42,7 @@ Auth::routes(['verify' => true]);
 //Rutas para ColorController
 Route::get('/colores', [ColoresController::class, 'index']);
 
-//Rutas para EtapasController
-//Route::get('/etapas', [EtapasController::class, 'index']);
+//rutas de catalogos
 Route::resource('/etapas', EtapasController::class);
 Route::resource('/areas', AreasController::class);
+Route::resource('/departamentos', DepartamentosController::class);

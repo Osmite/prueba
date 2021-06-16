@@ -19,14 +19,14 @@ class EtapasController extends Controller
     {
         $areas = Areas::get()->all();
         $departamentos= Departamentos::get()->all();
-        $etapas = Etapas::paginate(5);        
+        $etapas = Etapas::where('estatus','!=',3)->get()->all();        
         $breadcrumbs = [
             ['link' => "/", 'name' => "Etapas"], ['link' => "javascript:void(0)", 'name' => "Etapas"], ['name' => "Etapas"],
         ];
         //Pageheader set true for breadcrumbs
         $pageConfigs = ['pageHeader' => true];
       //dd($colores);
-        return view('etapas.etapas', /*['pageConfigs' => $pageConfigs],*/ ['breadcrumbs' => $breadcrumbs])->with(compact('etapas','areas','departamentos'));
+        return view('catalogos.etapas', /*['pageConfigs' => $pageConfigs],*/ ['breadcrumbs' => $breadcrumbs])->with(compact('etapas','areas','departamentos'));
     }
 
     /**
@@ -47,17 +47,32 @@ class EtapasController extends Controller
      */
     public function store(Request $request)
     {
+        //dd($request);
+        switch ($request->estado) {
+            case "on":
+                $estatus=1;
+                break;
+           
+            default:
+                $estatus=2;
+                break;
+        }
+        //dd($request->estatus);
+        
         if ($request->action=="update"){
+            
             $request->validate([
                 'area' => 'required',
                 'departamento' => 'required',
                 'descripcion' => 'required',
+                //'estatus'=>$estatus,
                 
             ]);
             $etapas=Etapas::where('orden','=',$request->orden)->first();
             //dd($etapas);
             
             $etapas->update($request->all());
+            $etapas->update(['estatus' => $estatus]);
     
             return redirect()->route('etapas.index')
             ->with('success', 'Etapa actualizada exitosamente.');
@@ -69,7 +84,8 @@ class EtapasController extends Controller
             
         ]);
 
-        Etapas::create($request->all());
+        $etapa=Etapas::create($request->all());
+        $etapa->update(['estatus' => $estatus]);
 
         return redirect()->route('etapas.index')
             ->with('success', 'Etapa creada exitosamente.');
@@ -94,7 +110,14 @@ class EtapasController extends Controller
      */
     public function edit($id)
     {
-        dd($id);
+        
+        $etapas=Etapas::where('orden','=',$id)->first();
+        //dd($etapas);
+        //$ejemplo = Etapas::find($id)->update(['estatus' => 3]);
+        $etapas->update(['estatus' => 3]);
+        return redirect()->route('etapas.index')
+        ->with('success', 'Etapa Borrada.');
+
     }
 
     /**
@@ -117,6 +140,6 @@ class EtapasController extends Controller
      */
     public function destroy($id)
     {
-        dd($id);
+       
     }
 }

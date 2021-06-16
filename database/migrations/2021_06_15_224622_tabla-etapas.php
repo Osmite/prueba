@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class TablaEtapas extends Migration
+class tablaEtapas extends Migration
 {
     /**
      * Run the migrations.
@@ -18,8 +18,13 @@ class TablaEtapas extends Migration
         Schema::create('etapas', function (Blueprint $table) {
             $table->id('orden')->autoIncrement();
             $table->string('descripcion')->nullable();
-            $table->string('area')->nullable();
-            $table->string('departamento')->nullable();
+
+            $table->unsignedBigInteger('area')->nullable();
+            $table->foreign('area')->references('clave')->on('areas')->onDelete('set null');
+
+            $table->unsignedBigInteger('departamento')->nullable();
+            $table->foreign('departamento')->references('clave')->on('departamentos')->onDelete('set null');
+            
             $table->integer('estatus')->nullable();
             $table->timestamp('created_at')->nullable();
             $table->timestamp('updated_at')->nullable();
