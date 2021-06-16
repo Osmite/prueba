@@ -183,8 +183,12 @@ function actualizar(id,desc,stat,area){
     $('#descripcion').val(desc);
     updatefields();
     change_select(selectArea,area);
+  
     if(stat==1){
-        $("#estado").prop("checked", true);
+        $("#estado").prop("checked", true);        
+    }
+    if(stat==2){
+        $("#estado").prop("checked", false);        
     }
     //document.getElementById('miText').disabled = true;
 }
@@ -204,7 +208,5 @@ function bloquearForm(){
     btn_guardar.style.display = "none";
 
 }
-
-
 
 </script>

@@ -145,8 +145,12 @@ function actualizar(id,desc,stat){
     $('#clave').val(id);
     $('#descripcion').val(desc);
     updatefields();
+   
     if(stat==1){
-        $("#estado").prop("checked", true);
+        $("#estado").prop("checked", true);        
+    }
+    if(stat==2){
+        $("#estado").prop("checked", false);        
     }
     //document.getElementById('miText').disabled = true;
 }

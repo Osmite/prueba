@@ -60,12 +60,12 @@ class EtapasController extends Controller
         //dd($request->estatus);
         
         if ($request->action=="update"){
-            
+            //dd($request);
             $request->validate([
                 'area' => 'required',
                 'departamento' => 'required',
                 'descripcion' => 'required',
-                //'estatus'=>$estatus,
+                
                 
             ]);
             $etapas=Etapas::where('orden','=',$request->orden)->first();
